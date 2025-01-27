@@ -70,10 +70,4 @@ COPY . /app
 RUN chown -R www:www /app
 USER www
 
-RUN composer install --no-dev --optimize-autoloader
-RUN php artisan optimize:clear
-RUN php artisan config:cache
-RUN php artisan route:cache
-
-
 CMD ["php", "artisan", "octane:start", "--server=roadrunner", "--host=0.0.0.0", "--port=8000"]

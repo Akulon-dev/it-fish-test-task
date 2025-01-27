@@ -17,6 +17,9 @@ sudo docker compose up -d db redis
 php artisan migrate --force
 php artisan db:seed
 php artisan l5-swagger:generate
+php artisan optimize:clear
+php artisan config:cache
+php artisan route:cache
 
 sudo docker compose up -d app
 ```
