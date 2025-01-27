@@ -9,6 +9,7 @@
 git clone https://github.com/Akulon-dev/it-fish-test-task.git
 cd it-fish-test-task
 cp .env.example .env
+composer install --no-dev --optimize-autoloader
 php artisan key:generate
 
 sudo docker compose up -d db redis
