@@ -8,7 +8,7 @@
 ```bash
 git clone https://github.com/Akulon-dev/it-fish-test-task.git
 cd it-fish-test-task
-cp .env.example .env
+cp .env.production .env
 composer install --no-dev --optimize-autoloader
 php artisan key:generate
 
@@ -23,8 +23,6 @@ docker exec -it it_fish_test_task php artisan l5-swagger:generate
 docker exec -it it_fish_test_task php artisan optimize:clear
 docker exec -it it_fish_test_task php artisan config:cache
 docker exec -it it_fish_test_task php artisan route:cache
-
-
 ```
 
 ## Документация
