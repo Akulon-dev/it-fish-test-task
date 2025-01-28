@@ -4,7 +4,7 @@ services:
         container_name: it_fish_db
         restart: always
         networks:
-            - laravel-development
+            - it-fist-test-task-network
         environment:
             POSTGRES_DB: ${DB_DATABASE}
             POSTGRES_USER: ${DB_USERNAME}
@@ -12,37 +12,43 @@ services:
         ports:
             - "5432:5432"
         volumes:
-            - pgdata:/var/lib/postgresql/data
+            - ./pgdata:/var/lib/postgresql/data
     redis:
         image: redis:latest
         container_name: it_fish_redis
         ports:
             - "6379:6379"
         volumes:
-            - redis_data:/data
+            - ./redis_data:/data
         restart: always
         networks:
-            - laravel-development
+            - it-fist-test-task-network
     app:
         build: .
         container_name: it_fish_test_task
+        restart: always
         ports:
             - "8000:8000"
-        depends_on:
-            - db
-            - redis
-        networks:
-            - laravel-development
+        working_dir: /var/www
+        volumes:
+          - .:/var/www
+          - ./storage/logs:/var/www/storage/logs
         environment:
+            APP_ENV: production
+            APP_DEBUG: "false"
             DB_CONNECTION: pgsql
             DB_HOST: ${DB_HOST}
             DB_PORT: ${DB_PORT}
             DB_DATABASE: ${DB_DATABASE}
             DB_USERNAME: ${DB_USERNAME}
             DB_PASSWORD: ${DB_PASSWORD}
+        depends_on:
+            - db
+            - redis
+        networks:
+            - it-fist-test-task-network
 
-volumes:
-    pgdata:
-    redis_data:
+
 networks:
-    laravel-development:
+    it-fist-test-task-network:
+

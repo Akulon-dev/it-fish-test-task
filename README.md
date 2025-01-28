@@ -12,18 +12,22 @@ cp .env.example .env
 composer install --no-dev --optimize-autoloader
 php artisan key:generate
 
-sudo docker compose up -d db redis
+sudo sysctl vm.overcommit_memory=1
 
-php artisan migrate --force
-php artisan db:seed
-php artisan l5-swagger:generate
-php artisan optimize:clear
-php artisan config:cache
-php artisan route:cache
+docker compose build
+docker compose up -d
 
-sudo docker compose up -d app
+docker exec -it it_fish_test_task php artisan migrate --force
+docker exec -it it_fish_test_task php artisan db:seed -n --force
+docker exec -it it_fish_test_task php artisan l5-swagger:generate
+docker exec -it it_fish_test_task php artisan optimize:clear
+docker exec -it it_fish_test_task php artisan config:cache
+docker exec -it it_fish_test_task php artisan route:cache
+
+
 ```
 
 ## Документация
 доступна по адресу **/api/documentation**.
+
 

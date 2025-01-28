@@ -62,12 +62,9 @@ RUN if getent group ${GID}; then \
     echo 'www ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
 
-RUN mkdir "app"
+WORKDIR /var/www
+COPY . .
 
-WORKDIR /app
+RUN chmod -R 777 storage bootstrap/cache
 
-COPY . /app
-RUN chown -R www:www /app
-USER www
-
-CMD ["php", "artisan", "octane:start", "--server=roadrunner", "--host=0.0.0.0", "--port=8000"]
+CMD ["php", "artisan", "octane:start", "--server=roadrunner", "--host=0.0.0.0", "--port=8000", "--env=.env.production"]
